@@ -34,6 +34,6 @@ def getRepoCommits(userId):
 userId = input('Enter user id: ')
 res = getRepoCommits(userId)
 
-if res != None:
+if res != None: 
     for i in res:
         print(i)
