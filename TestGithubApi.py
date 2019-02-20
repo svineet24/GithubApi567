@@ -5,7 +5,7 @@ The primary goal of this file is to demonstrate a simple unittest implementation
 """
 
 import unittest
-from HW04 import getRepoCommits, res
+from githubApi import getRepoCommits, res
 
 # This code implements the unit test functionality
 
