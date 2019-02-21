@@ -23,7 +23,7 @@ class TestGitHub(unittest.TestCase):
                                                     'Repo: SSW567, Number of commits: 2', 
                                                     'Repo: SSW810, Number of commits: 2', 
                                                     'Repo: Triangle567, Number of commits: 16', 
-                                                    'Repo: GithubApi567, Number of commits: 10'])
+                                                    'Repo: GithubApi567, Number of commits: 14'])
 
 
 if __name__ == '__main__':
