@@ -41,8 +41,6 @@ def getRepoCommits(userId):
 userId = 'bunny87'
 res = getRepoCommits(userId)
 
-print(res)
-
 if res != None:
     for i in res:
         print(i)
