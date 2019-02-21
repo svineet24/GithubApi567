@@ -31,7 +31,8 @@ def getRepoCommits(userId):
         print(f'ERROR: Repository with name "{userId}" does not exist!')
 
 
-userId = input('Enter user id: ')
+# userId = input('Enter user id: ')
+userId = 'bunny87'
 res = getRepoCommits(userId)
 
 if res != None: 
