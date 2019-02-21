@@ -9,17 +9,21 @@ from githubApi import getRepoCommits, res
 
 # This code implements the unit test functionality
 
-class TestTriangles(unittest.TestCase):
+class TestGitHub(unittest.TestCase):
     # define multiple sets of tests as functions with names that begin
 
     def testgetRepoCommits_Blank(self):
-        self.assertEqual(getRepoCommits(''), None)
+        self.assertIsNone(getRepoCommits(''))
 
     def testgetRepoCommits_InvalidValue(self):
-        self.assertEqual(getRepoCommits('Test'), None)
+        self.assertIsNotNone(getRepoCommits('ABC'))
 
     def testgetRepoCommits_ValidValue(self):
-        self.assertEqual(getRepoCommits('bunny87'), res)
+        self.assertEqual(getRepoCommits('bunny87'), ['Repo: CS546, Number of commits: 2', 
+                                                    'Repo: SSW567, Number of commits: 2', 
+                                                    'Repo: SSW810, Number of commits: 2', 
+                                                    'Repo: Triangle567, Number of commits: 16', 
+                                                    'Repo: GithubApi567, Number of commits: 10'])
 
 
 if __name__ == '__main__':
