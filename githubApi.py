@@ -5,7 +5,7 @@ this program implements the functionality to print github repository
 and number of commits in that repository
 """
 
-import urllib.request, json
+import requests, json
 
 def getRepoCommits(userId):
     """ this method take github username as input and 
@@ -13,28 +13,38 @@ def getRepoCommits(userId):
 
     try:
         gitURL = f'https://api.github.com/users/{userId}/repos'
-        with urllib.request.urlopen(gitURL) as url:
-            repositories = json.loads(url.read().decode()) # returns list of repositories
+    except requests.exceptions.InvalidURL:
+        print('URL is invalid!')
+    except requests.exceptions.ConnectionError:
+        print('Invalid Request!')
+    except requests.exceptions.InvalidSchema:
+        print('Invalid Request!')
+    else:
+        response = requests.get(gitURL)
+        responseCode = response.status_code
+        if  responseCode == 200:
+            repositories = json.loads(response.content) # returns list of repositories
             repoData = list()
 
             for repo in repositories: # x is dict
                 repoName = repo['name']
                 repoURL = f'https://api.github.com/repos/{userId}/{repoName}/commits'
-                with urllib.request.urlopen(repoURL) as url:
-                    commits = json.loads(url.read().decode()) # returns list of commits
-                    numCommits = len(commits)
-                    repoData.append(f'Repo: {repoName}, Number of commits: {numCommits}')
+                commits = requests.get(repoURL)
+                commits = json.loads(commits.content) # returns list of commits
+                numCommits = len(commits)
+                repoData.append(f'Repo: {repoName}, Number of commits: {numCommits}')
 
             return repoData
-
-    except urllib.error.HTTPError:
-        print(f'ERROR: Repository with name "{userId}" does not exist!')
 
 
 # userId = input('Enter user id: ')
 userId = 'bunny87'
 res = getRepoCommits(userId)
 
-if res != None: 
+print(res)
+
+if res != None:
     for i in res:
         print(i)
+else:
+    print('Invalid Request!')
