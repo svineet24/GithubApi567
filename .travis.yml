@@ -5,4 +5,5 @@ install:
   - pip install requests
 # command to run tests
 script:
-  - python -m unittest TestGithubApi
+  - python -m unittest hw05_mocking
+  - python -m run test-data
