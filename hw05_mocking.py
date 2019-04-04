@@ -8,8 +8,8 @@ from os.path import isfile, join
 
 testData = dict()
 
-for f in listdir('data_file'):
-    f_name = join('data_file', f)
+for f in listdir('test-data'):
+    f_name = join('test-data', f)
     if isfile(f_name):
         file = open(f_name, 'r')
         testData[f_name] = json.loads(file.read())
