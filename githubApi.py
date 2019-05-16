@@ -1,48 +1,38 @@
-"""
-@author: Vineet Singh
-@date: February 19, 2019
-this program implements the functionality to print github repository
-and number of commits in that repository
-"""
-
-import requests, json
-
-def getRepoCommits(userId):
-    """ this method take github username as input and 
-    returns repository name and number of commits against that repository """
-
-    try:
-        gitURL = f'https://api.github.com/users/{userId}/repos'
-    except requests.exceptions.InvalidURL:
-        print('URL is invalid!')
-    except requests.exceptions.ConnectionError:
-        print('Invalid Request!')
-    except requests.exceptions.InvalidSchema:
-        print('Invalid Request!')
-    else:
-        response = requests.get(gitURL)
-        responseCode = response.status_code
-        if  responseCode == 200:
-            repositories = json.loads(response.content) # returns list of repositories
-            repoData = list()
-
-            for repo in repositories: # x is dict
-                repoName = repo['name']
-                repoURL = f'https://api.github.com/repos/{userId}/{repoName}/commits'
-                commits = requests.get(repoURL)
-                commits = json.loads(commits.content) # returns list of commits
-                numCommits = len(commits)
-                repoData.append(f'Repo: {repoName}, Number of commits: {numCommits}')
-
-            return repoData
+import requests
+import json
 
 
-# userId = input('Enter user id: ')
-userId = 'bunny87'
-res = getRepoCommits(userId)
+def Repocheck(UserID):
+    URL = 'https://api.github.com/users/'+UserID+'/repos'
+    html = requests.get(URL)
+    loaded_json = json.loads(html.text)
+    repos = []
+    for x in loaded_json:
+        if "name" in x:
+            repos.append([x["name"]])
+    for i in repos:
+        URL = "https://api.github.com/repos/"+UserID+"/"+i[0]+"/commits"
+        html = requests.get(URL)
+        loaded_json = json.loads(html.text)
+        commit = 0
+        for x in loaded_json:
+            if "commit" in x:
+                commit = commit + 1
+        i.append(commit)
+    return repos
 
-if res != None:
-    for i in res:
-        print(i)
-else:
-    print('Invalid Request!')
+
+"""def Repoprint(repos):
+    for i in repos:
+        print(f"Repo: {i[0]} Number of commits: {i[1]}")
+    print(repos)"""
+
+
+#def main():
+#    UserID = input("Enter GitHub user ID: ")
+#    repos = Repocheck(UserID)
+#    Repoprint(repos)
+
+# Uncomment this below line to use this py file
+#if __name__ == "__main__":
+#    main()
