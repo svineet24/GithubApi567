@@ -1,6 +1,6 @@
 import unittest
 
-from HW4A_AdityaMunot import *
+from githubApi import *
 from unittest import mock
 
 
